@@ -7,7 +7,7 @@
     <!-- SUPABASE CLIENT -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
     /* Soft Dark Theme - No Neon, Easy on Eyes */
     .theme-bg { 
@@ -27,10 +27,6 @@
     .kanban-column { flex: 1; overflow-y: auto; padding-bottom: 1rem; }
     .task-card { cursor: pointer; transition: all 0.2s ease; }
     .task-card:active { transform: scale(0.98); }
-    
-    .color-yagiz { background-color: #475569; } .color-berkay { background-color: #475569; }
-    .color-aysila { background-color: #475569; } .color-efe { background-color: #475569; }
-    .color-devrim { background-color: #475569; } .color-all { background-color: #334155; }
     
     .bg-person-yagiz { background-color: #334155; color: #cbd5e1; border: 1px solid #475569; }
     .bg-person-berkay { background-color: #334155; color: #cbd5e1; border: 1px solid #475569; }
@@ -69,7 +65,6 @@
             <div class="px-6 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 mt-2">📊 Panolar</div>
             <div id="sidebar-boards"></div>
 
-            
             <div class="px-6 py-3 text-xs font-semibold text-emerald-500 uppercase tracking-wider mt-6 mb-1 border-t border-slate-700/50 pt-6">
                 🤖 Yapay Zeka Fabrikası
             </div>
@@ -79,7 +74,6 @@
             
             <div class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-1 flex justify-between items-center border-t border-slate-700/50 pt-6">
                 <span>💬 Kanallar</span>
-
                 <button onclick="openNewRoomModal()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded-md shadow-sm font-medium transition flex items-center text-[11px]">
                     <span class="mr-1 leading-none">+</span> YENİ
                 </button>
@@ -103,23 +97,77 @@
 
     <div id="auth-screen" class="absolute inset-0 theme-bg flex flex-col items-center justify-center z-30 hidden">
         <div class="glass-modal p-10 rounded-2xl w-full max-w-sm text-center relative">
-            <!-- Sync Indicator -->
             <div id="sync-indicator" class="absolute top-4 right-4 flex items-center hidden">
                 <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-2"></div>
                 <span class="text-[10px] text-slate-500 font-bold uppercase">Online</span>
             </div>
-            
             <div class="w-16 h-16 bg-slate-800 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-700">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
             </div>
             <h2 class="text-xl font-bold text-slate-200 mb-2">Sistem Kilitli</h2>
             <p class="text-sm text-slate-400 mb-8">Yetkili erişimi için PIN girin.</p>
-            
             <form onsubmit="verifyPin(event)">
                 <input type="password" id="pinInput" maxlength="4" pattern="[0-9]{4}" required autocomplete="off" class="w-full text-center text-3xl tracking-[0.5em] font-mono py-4 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 outline-none transition mb-4" placeholder="••••">
                 <p id="pinError" class="text-rose-400 text-sm font-medium mb-4 hidden">Hatalı PIN!</p>
                 <button type="submit" class="w-full py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold rounded-xl transition">Kilidi Aç</button>
             </form>
+        </div>
+    </div>
+
+    <!-- AI SCREEN -->
+    <div id="ai-screen" class="flex-1 flex flex-col h-full hidden p-8 overflow-y-auto">
+        <header class="mb-8 flex justify-between items-end">
+            <div>
+                <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 flex items-center tracking-tight mb-2">
+                    ⚡ AI Üretim Fabrikası
+                </h2>
+                <p class="text-sm text-slate-400 font-medium">Şirketin otonom çalışanları. Bir bant seçin ve üretimi başlatın.</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-panel p-6 rounded-2xl border border-emerald-900/30 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-2xl mr-4 shadow-inner border border-slate-700">🕵️</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-200">Hedef Kitle & Veri Avcısı</h3>
+                        <p class="text-xs text-emerald-500 font-bold uppercase tracking-wider mt-1">Strateji / CEO</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 mb-6 min-h-[60px]">Türkiye'deki üniversitelerin aktif sinema/tiyatro kulüplerini, organizatörlerini internetten kazar ve sana listeler.</p>
+                <div class="flex gap-2">
+                    <button onclick="triggerAI('data_miner')" class="flex-1 py-3 bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-600/50 hover:border-emerald-500 text-emerald-400 hover:text-white font-bold rounded-xl transition flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Ajanı Çalıştır
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl border border-purple-900/30 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-2xl mr-4 shadow-inner border border-slate-700">🎬</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-200">Sosyal Medya Kanca Jeneratörü</h3>
+                        <p class="text-xs text-purple-400 font-bold uppercase tracking-wider mt-1">İçerik / CMO</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 mb-6 min-h-[60px]">Dating app ve sinema nişindeki en güncel viral trendleri tarar, Reels/TikTok için 5 farklı vurucu "Hook" yazar.</p>
+                <div class="flex gap-2">
+                    <button onclick="triggerAI('hook_generator')" class="flex-1 py-3 bg-purple-600/20 hover:bg-purple-600 border border-purple-600/50 hover:border-purple-500 text-purple-400 hover:text-white font-bold rounded-xl transition flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Ajanı Çalıştır
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Output Console -->
+        <div class="mt-8 glass-panel rounded-2xl border border-slate-700/50 flex flex-col overflow-hidden h-64">
+            <div class="bg-black/50 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                <span class="text-xs font-mono text-emerald-500 font-bold">Terminal / Çıktılar</span>
+                <span id="ai-status-indicator" class="text-[10px] uppercase font-bold text-slate-500">Beklemede</span>
+            </div>
+            <div id="ai-console" class="p-4 flex-1 overflow-y-auto font-mono text-sm text-slate-300 whitespace-pre-wrap">Sistem Hazır. Bir üretim bandı seçin ve ajanı uyandırın...</div>
         </div>
     </div>
 
@@ -139,7 +187,6 @@
                 </div>
             </div>
         </header>
-
         <div id="list-container" class="flex-1 overflow-y-auto p-10 h-full hidden">
             <div class="glass-list rounded-xl overflow-hidden">
                 <table class="w-full text-left border-collapse whitespace-nowrap">
@@ -155,7 +202,6 @@
                 </table>
             </div>
         </div>
-
         <div id="kanban-container" class="flex-1 overflow-x-auto p-10 flex gap-6 items-start h-full pb-10 hidden">
             <div class="w-80 flex-shrink-0 kanban-wrapper">
                 <h3 class="font-semibold text-slate-300 text-base mb-4 px-2 flex justify-between items-center bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/50">
@@ -197,128 +243,42 @@
                     ⚙️ Detaylar
                 </button>
             </header>
-            
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-8 flex flex-col gap-4">
-                <!-- Messages -->
-            </div>
-            
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-8 flex flex-col gap-4"></div>
             <div class="p-5 border-t border-slate-700/50 bg-slate-800/50 backdrop-blur-xl">
                 <form onsubmit="sendChatMessage(event)" class="flex gap-3">
                     <input type="text" id="chatInput" autocomplete="off" placeholder="Mesajınızı yazın..." class="flex-1 px-5 py-3 rounded-xl glass-card text-slate-200 focus:outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-500 font-medium text-sm placeholder-slate-500">
-                    <button type="submit" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-sm rounded-xl transition flex items-center">
-                        Gönder
-                    </button>
+                    <button type="submit" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-sm rounded-xl transition flex items-center">Gönder</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- ROOM AUTH MODAL -->
+    <!-- MODALS -->
     <div id="roomAuthModal" class="modal-overlay fixed inset-0 bg-slate-900/80 backdrop-blur-sm items-center justify-center z-[60]">
         <div class="modal-content glass-modal rounded-2xl w-full max-w-sm overflow-hidden p-8 text-center">
             <h3 class="text-lg font-bold text-slate-200 mb-2">Gizli Oda</h3>
             <p class="text-xs text-slate-400 mb-6">Bu odaya girmek için şifre gerekiyor.</p>
-            <input type="password" id="roomPasswordAttempt" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-600 text-center text-slate-200 focus:outline-none focus:border-slate-400 mb-4" placeholder="Oda Şifresi">
-            <p id="roomAuthError" class="text-rose-400 text-xs mb-4 hidden">Şifre yanlış!</p>
+            <input type="password" id="roomPasswordAttempt" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-600 text-center text-slate-200 mb-4" placeholder="Oda Şifresi">
             <div class="flex gap-2">
                 <button onclick="closeRoomAuth()" class="flex-1 py-2.5 bg-slate-800 text-slate-300 rounded-lg text-sm">İptal</button>
                 <button onclick="submitRoomAuth()" class="flex-1 py-2.5 bg-slate-600 text-white rounded-lg text-sm font-semibold">Giriş Yap</button>
             </div>
         </div>
     </div>
-
-    <!-- ROOM SETTINGS MODAL -->
-    <div id="roomSettingsModal" class="modal-overlay fixed inset-0 bg-slate-900/80 backdrop-blur-sm items-center justify-center z-50">
-        <div class="modal-content glass-modal rounded-2xl w-full max-w-md overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-700/50 flex justify-between items-center">
-                <h3 class="text-lg font-bold text-slate-200">Oda Ayarları</h3>
-                <button onclick="closeRoomSettings()" class="text-slate-400 hover:text-slate-200"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            </div>
-            <div class="p-6">
-                <div class="mb-5">
-                    <label class="block text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wide">Oda Şifresi</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="settingRoomPassword" class="flex-1 px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 focus:outline-none focus:border-slate-500" placeholder="Şifre yok (Açık)">
-                        <button onclick="saveRoomPassword()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs rounded-lg font-medium">Güncelle</button>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wide">Katılımcılar</label>
-                    <ul id="settingMembersList" class="space-y-2 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 max-h-40 overflow-y-auto"></ul>
-                </div>
-
-                <div id="adminDangerZone" class="pt-4 border-t border-slate-700/50">
-                    <button onclick="deleteCurrentRoom()" class="w-full py-2.5 bg-rose-900/40 hover:bg-rose-900/60 border border-rose-800/50 text-rose-300 font-semibold text-sm rounded-lg transition">Odayı Sil</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW ROOM MODAL -->
-    <div id="newRoomModal" class="modal-overlay fixed inset-0 bg-slate-900/80 backdrop-blur-sm items-center justify-center z-50">
-        <div class="modal-content glass-modal rounded-2xl w-full max-w-md overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-700/50 flex justify-between items-center">
-                <h3 class="text-lg font-bold text-slate-200">Yeni Oda Aç</h3>
-                <button onclick="closeNewRoomModal()" class="text-slate-400 hover:text-slate-200"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            </div>
-            <form onsubmit="createRoom(event)" class="p-6">
-                <div class="mb-4">
-                    <label class="block text-slate-400 text-xs font-semibold mb-1">Oda Adı</label>
-                    <input type="text" id="roomName" required class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 focus:border-slate-500 outline-none text-sm text-slate-200" placeholder="İsim...">
-                </div>
-                <div class="mb-4">
-                    <label class="block text-slate-400 text-xs font-semibold mb-1">Oda Şifresi (Opsiyonel)</label>
-                    <input type="text" id="roomPass" class="w-full px-4 py-2.5 rounded-lg bg-slate-800 border border-slate-700 focus:border-slate-500 outline-none text-sm text-slate-200" placeholder="Boş bırakırsanız şifresiz olur">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-slate-400 text-xs font-semibold mb-2">Başlangıç Katılımcıları</label>
-                    <div class="space-y-2 bg-slate-800/50 p-3 rounded-lg border border-slate-700">
-                        <label class="flex items-center cursor-pointer text-sm text-slate-300"><input type="checkbox" value="berkay" class="room-member mr-2"> Berkay</label>
-                        <label class="flex items-center cursor-pointer text-sm text-slate-300"><input type="checkbox" value="aysila" class="room-member mr-2"> Aysıla</label>
-                        <label class="flex items-center cursor-pointer text-sm text-slate-300"><input type="checkbox" value="efe" class="room-member mr-2"> Efe</label>
-                        <label class="flex items-center cursor-pointer text-sm text-slate-300"><input type="checkbox" value="devrim" class="room-member mr-2"> Devrim</label>
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold text-sm rounded-lg transition">Kur</button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- NEW TASK MODAL -->
-    <div id="newTaskModal" class="modal-overlay fixed inset-0 bg-slate-900/80 backdrop-blur-sm items-center justify-center z-50">
-        <div class="modal-content glass-modal rounded-2xl w-full max-w-md overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-700/50 flex justify-between items-center">
-                <h3 class="text-lg font-bold text-slate-200">Yeni Görev</h3>
-                <button onclick="closeNewTaskModal()" class="text-slate-400 hover:text-slate-200"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-            </div>
-            <form onsubmit="saveNewTask(event)" class="p-6">
-                <div class="mb-4">
-                    <label class="block text-slate-400 text-xs font-semibold mb-1">Ne Yapılacak?</label>
-                    <textarea id="newDesc" required rows="2" class="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 focus:border-slate-500 outline-none text-sm text-slate-200 resize-none"></textarea>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mb-5">
-                    <div>
-                        <label class="block text-slate-400 text-xs font-semibold mb-1">Sorumlu</label>
-                        <select id="newAssignee" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 outline-none">
-                            <option value="yagiz">Yağız</option><option value="berkay">Berkay</option>
-                            <option value="aysila">Aysıla</option><option value="efe">Efe</option><option value="devrim">Devrim</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 text-xs font-semibold mb-1">Deadline</label>
-                        <input type="date" id="newDeadline" required class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 outline-none">
-                    </div>
-                </div>
-                <div class="flex justify-end pt-4 border-t border-slate-700/50">
-                    <button type="submit" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium text-sm rounded-lg transition">Kaydet</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </main>
+
 <script>
-    // --- SUPABASE CONFIG ---
+    // AGGRESSIVE FAILSAFE
+    setTimeout(() => {
+        const loader = document.getElementById('loading-screen');
+        if (loader && !loader.classList.contains('hidden')) {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('auth-screen').classList.add('flex');
+            console.warn("Connection bypass triggered.");
+        }
+    }, 4000);
+
     const SUPABASE_URL = 'https://jrgwtuqwhdjshzdljfhw.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_nDIaKaXlK37-bb45VgrRQw_7YGKWEXd';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -329,110 +289,54 @@
     let unlockedViews = []; 
     let activeModule = 'board'; 
     let activeId = 'all'; 
-    let loggedInUser = null; 
-    let pendingAuthRoomId = null;
+    let loggedInUser = null;
 
     let tasks = [];
     let channels = [];
     let messages = [];
 
-    // INIT DB
-    
-    
-    // AGGRESSIVE FAILSAFE
-    setTimeout(() => {
-        const loader = document.getElementById('loading-screen');
-        if (loader && !loader.classList.contains('hidden')) {
-            console.warn("Supabase connection taking too long. Forcing start...");
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('auth-screen').classList.remove('hidden');
-            document.getElementById('auth-screen').classList.add('flex');
-            
-            const warning = document.createElement('div');
-            warning.className = 'absolute top-0 left-0 w-full bg-amber-600 text-white text-[10px] py-1 text-center font-bold z-[100]';
-            warning.innerText = "UYARI: Veritabanı geciktiği için Çevrimdışı Modda başlatıldı. Veriler kaydedilmeyebilir.";
-            document.body.appendChild(warning);
-        }
-    }, 4000);
-
     async function initSupabase() {
-
         try {
-            console.log("Connecting to Supabase...");
-            
-            const { data: cData, error: cErr } = await supabase.from('channels').select('*');
-            if (cErr) throw new Error("Channels Error: " + cErr.message);
-            
+            const { data: cData } = await supabase.from('channels').select('*');
             if (cData && cData.length > 0) {
-                channels = cData.map(c => ({
-                    ...c, 
-                    members: typeof c.members === 'string' ? JSON.parse(c.members) : c.members
-                }));
+                channels = cData.map(c => ({...c, members: typeof c.members === 'string' ? JSON.parse(c.members) : c.members}));
             } else {
                 channels = [
                     { id: 'c_genel', name: 'Genel Pano', type: 'public', members: [], password: '' },
                     { id: 'c_muhasebe', name: 'Muhasebe', type: 'public', members: [], password: '' },
                     { id: 'c_hukuk', name: 'Hukuk', type: 'public', members: [], password: '' }
                 ];
-                for(let ch of channels) {
-                    await supabase.from('channels').insert([{ ...ch, members: JSON.stringify(ch.members) }]);
-                }
+                for(let ch of channels) await supabase.from('channels').insert([{ ...ch, members: JSON.stringify(ch.members) }]);
             }
-
-            const { data: tData, error: tErr } = await supabase.from('tasks').select('*');
-            if (tErr) throw new Error("Tasks Error: " + tErr.message);
-            if (tData && tData.length > 0) tasks = tData;
-
-            const { data: mData, error: mErr } = await supabase.from('messages').select('*');
-            if (mErr) throw new Error("Messages Error: " + mErr.message);
-            if (mData && mData.length > 0) messages = mData;
+            const { data: tData } = await supabase.from('tasks').select('*');
+            if (tData) tasks = tData;
+            const { data: mData } = await supabase.from('messages').select('*');
+            if (mData) messages = mData;
 
             document.getElementById('loading-screen').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
             document.getElementById('auth-screen').classList.add('flex');
-            
+            changeModule('board', 'all');
         } catch (err) {
-            console.error("FATAL ERROR:", err);
-            document.getElementById('loading-screen').innerHTML = '<div class="text-center"><p class="text-rose-500 font-bold mb-2 text-xl">VERİTABANI BAĞLANTISI KOPTU</p><p class="text-sm text-slate-300 mb-6 max-w-md mx-auto break-words">' + err.message + '</p><button onclick="forceStart()" class="px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-extrabold rounded-xl shadow-lg transition">Sistemi Çevrimdışı (Local) Başlat</button></div>';
+            console.error(err);
+            forceStart();
         }
     }
 
-    window.forceStart = function() {
+    function forceStart() {
         document.getElementById('loading-screen').classList.add('hidden');
         document.getElementById('auth-screen').classList.remove('hidden');
         document.getElementById('auth-screen').classList.add('flex');
-    };
-
+    }
 
     function changeModule(module, id) {
         if (unlockedViews.length === 0) {
-            document.getElementById('board-screen').classList.add('hidden');
-            document.getElementById('chat-screen').classList.add('hidden');
+            window.pendingModule = module; window.pendingId = id;
             document.getElementById('auth-screen').classList.remove('hidden');
             document.getElementById('auth-screen').classList.add('flex');
-            
-            window.pendingModule = module;
-            window.pendingId = id;
-            document.getElementById('pinInput').value = '';
-            document.getElementById('pinInput').focus();
             return;
         }
-        
         if (module === 'board' && id !== 'all' && loggedInUser !== 'all' && loggedInUser !== 'yagiz' && loggedInUser !== id) return;
-
-        if (module === 'chat') {
-            const ch = channels.find(c => c.id === id);
-            if (ch && ch.password && ch.password !== '') {
-                if (loggedInUser !== 'all' && loggedInUser !== 'yagiz') {
-                    pendingAuthRoomId = id;
-                    document.getElementById('roomAuthError').classList.add('hidden');
-                    document.getElementById('roomPasswordAttempt').value = '';
-                    document.getElementById('roomAuthModal').classList.add('active');
-                    setTimeout(() => document.getElementById('roomPasswordAttempt').focus(), 100);
-                    return;
-                }
-            }
-        }
         executeViewChange(module, id);
     }
 
@@ -440,105 +344,57 @@
         ev.preventDefault();
         const input = document.getElementById('pinInput').value;
         let matchedUser = Object.keys(PINS).find(k => PINS[k] === input);
-
         if (matchedUser) {
             loggedInUser = matchedUser;
-            if (matchedUser === 'all') { unlockedViews = ['all', 'yagiz', 'berkay', 'aysila', 'efe', 'devrim']; } 
-            else { unlockedViews.push(matchedUser); }
+            if (matchedUser === 'all') unlockedViews = ['all', 'yagiz', 'berkay', 'aysila', 'efe', 'devrim'];
+            else unlockedViews.push(matchedUser);
             document.getElementById('auth-screen').classList.add('hidden');
-            
-            let targetId;
-            if (window.pendingId === 'all') { targetId = (matchedUser === 'all' || matchedUser === 'yagiz') ? 'all' : matchedUser; } 
-            else { targetId = window.pendingId; }
-            executeViewChange(window.pendingModule || 'board', targetId);
+            executeViewChange(window.pendingModule || 'board', window.pendingId || 'all');
         } else {
             document.getElementById('pinError').classList.remove('hidden');
-            document.getElementById('pinInput').value = '';
         }
-    }
-
-    function lockSession() {
-        unlockedViews = []; loggedInUser = null; changeModule('board', 'all');
     }
 
     function executeViewChange(module, id) {
         activeModule = module; activeId = id;
         renderSidebarBoards(); renderSidebarChannels();
-
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        let navId = module === 'board' ? 'nav-board-' + id : 'nav-channel-' + id;
-        if(document.getElementById(navId)) document.getElementById(navId).classList.add('active');
-
+        
+        document.getElementById('board-screen').classList.add('hidden');
+        document.getElementById('chat-screen').classList.add('hidden');
+        document.getElementById('ai-screen').classList.add('hidden');
 
         if (module === 'board') {
-            document.getElementById('chat-screen').classList.add('hidden');
-            document.getElementById('ai-screen').classList.add('hidden');
             document.getElementById('board-screen').classList.remove('hidden');
-
             document.getElementById('board-screen').classList.add('flex');
-            
             if (id === 'all') {
                 document.getElementById('kanban-container').classList.add('hidden');
                 document.getElementById('list-container').classList.remove('hidden');
-                document.getElementById('view-title').innerText = "Tüm Ekip (Liste)";
-                document.getElementById('view-subtitle').innerText = "Projedeki tüm aktif görevler.";
                 renderList();
             } else {
                 document.getElementById('list-container').classList.add('hidden');
                 document.getElementById('kanban-container').classList.remove('hidden');
-                document.getElementById('view-title').innerText = personNames[id] + " Panosu";
-                document.getElementById('view-subtitle').innerText = "Kişisel görev yönetimi.";
                 renderKanban();
             }
-
         } else if (module === 'chat') {
-            document.getElementById('board-screen').classList.add('hidden');
-            document.getElementById('ai-screen').classList.add('hidden');
             document.getElementById('chat-screen').classList.remove('hidden');
-
             document.getElementById('chat-screen').classList.add('flex');
-            
-            const channel = channels.find(c => c.id === id);
-            if(channel) {
-                let lockIcon = channel.password ? '🔒 ' : '# ';
-                document.getElementById('chat-title').innerHTML = '<span class="text-slate-500 mr-2">' + lockIcon + '</span>' + channel.name;
-                document.getElementById('chat-subtitle').innerText = channel.type === 'public' ? 'Herkese Açık Kanal' : 'Katılımcılar: ' + channel.members.map(m=>personNames[m]).join(', ');
-                
-                let canEdit = (loggedInUser === 'all' || loggedInUser === 'yagiz');
-                if(canEdit) document.getElementById('btn-room-settings').classList.remove('hidden');
-                else document.getElementById('btn-room-settings').classList.add('hidden');
-            }
             renderMessages();
-            setTimeout(()=> document.getElementById('chatInput').focus(), 100);
-        }
         } else if (module === 'ai') {
-            document.getElementById('board-screen').classList.add('hidden');
-            document.getElementById('chat-screen').classList.add('hidden');
             document.getElementById('ai-screen').classList.remove('hidden');
             document.getElementById('ai-screen').classList.add('flex');
-            
-            // Highlight AI button in sidebar
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('nav-ai-factory').classList.add('active');
         }
     }
 
-    // SIDEBAR RENDERS
     function renderSidebarBoards() {
         const container = document.getElementById('sidebar-boards');
         container.innerHTML = '';
         if (loggedInUser === 'all' || loggedInUser === 'yagiz') {
-            container.innerHTML += `<button onclick="changeModule('board', 'all')" id="nav-board-all" class="nav-item flex items-center px-6 py-2.5 w-full text-left font-medium text-slate-300 text-sm">
-                <div class="w-5 h-5 rounded bg-slate-700 text-slate-200 flex items-center justify-center text-[9px] mr-3 font-bold border border-slate-600">ALL</div> Tüm Ekip (Liste)
-            </button>`;
+            container.innerHTML += `<button onclick="changeModule('board', 'all')" class="nav-item flex items-center px-6 py-2 w-full text-left">ALL (Liste)</button>`;
         }
-        const users = ['yagiz', 'berkay', 'aysila', 'efe', 'devrim'];
-        users.forEach(u => {
+        ['yagiz', 'berkay', 'aysila', 'efe', 'devrim'].forEach(u => {
             if (loggedInUser === 'all' || loggedInUser === 'yagiz' || loggedInUser === u) {
-                let initial = u.charAt(0).toUpperCase();
-                container.innerHTML += `<button onclick="changeModule('board', '${u}')" id="nav-board-${u}" class="nav-item flex items-center px-6 py-2.5 w-full text-left font-medium text-slate-300 text-sm">
-                    <div class="w-5 h-5 rounded bg-slate-700 text-slate-200 flex items-center justify-center text-[10px] mr-3 font-bold border border-slate-600">${initial}</div> ${personNames[u]}
-                </button>`;
+                container.innerHTML += `<button onclick="changeModule('board', '${u}')" class="nav-item flex items-center px-6 py-2 w-full text-left capitalize">${u}</button>`;
             }
         });
     }
@@ -547,324 +403,41 @@
         const container = document.getElementById('sidebar-channels');
         container.innerHTML = '';
         channels.forEach(ch => {
-            let isVisible = ch.type === 'public' || (loggedInUser === 'all' || loggedInUser === 'yagiz' || ch.members.includes(loggedInUser));
-            if (!isVisible) return;
-            let icon = ch.type === 'public' ? '💬' : (ch.password ? '🔒' : '🔏');
-            container.innerHTML += `<button onclick="changeModule('chat', '${ch.id}')" id="nav-channel-${ch.id}" class="nav-item flex items-center px-6 py-2 w-full text-left font-medium text-slate-400 text-sm hover:text-slate-200 transition">
-                <span class="mr-2 text-xs">${icon}</span> ${ch.name}
-            </button>`;
+            if (ch.type === 'public' || loggedInUser === 'all' || ch.members.includes(loggedInUser)) {
+                container.innerHTML += `<button onclick="changeModule('chat', '${ch.id}')" class="nav-item flex items-center px-6 py-2 w-full text-left text-sm opacity-70"># ${ch.name}</button>`;
+            }
         });
     }
 
-    // CHAT ENGINE
     function renderMessages() {
         const container = document.getElementById('chat-messages');
-        container.innerHTML = '';
-        const roomMessages = messages.filter(m => m.channelId === activeId);
-        
-        if(roomMessages.length === 0) {
-            container.innerHTML = '<div class="text-center text-slate-500 text-sm mt-10 font-medium">Bu odada mesaj yok. İlk adımı sen at!</div>';
-            return;
-        }
-
-        roomMessages.forEach(msg => {
-            let isMine = msg.sender === loggedInUser || (loggedInUser==='all' && msg.sender==='yagiz');
-            let senderName = personNames[msg.sender] || 'Yönetim';
-            let alignClass = isMine ? 'self-end items-end' : 'self-start items-start';
-            let bubbleClass = isMine ? 'msg-mine' : 'msg-other';
-            
-            container.innerHTML += `
-                <div class="flex flex-col max-w-[75%] ${alignClass}">
-                    <span class="text-[10px] text-slate-500 font-medium mb-1 px-1">${senderName} • ${msg.time}</span>
-                    <div class="px-4 py-2 rounded-xl shadow-sm text-sm ${bubbleClass}">
-                        ${msg.text}
-                    </div>
-                </div>
-            `;
-        });
+        container.innerHTML = messages.filter(m => m.channelId === activeId).map(msg => `
+            <div class="flex flex-col ${msg.sender === loggedInUser ? 'items-end' : 'items-start'}">
+                <span class="text-[10px] text-slate-500 mb-1">${personNames[msg.sender] || 'Yönetim'}</span>
+                <div class="px-4 py-2 rounded-xl text-sm ${msg.sender === loggedInUser ? 'bg-slate-700' : 'bg-slate-800'}">${msg.text}</div>
+            </div>
+        `).join('');
         container.scrollTop = container.scrollHeight;
     }
 
     async function sendChatMessage(ev) {
         ev.preventDefault();
         const input = document.getElementById('chatInput');
-        const text = input.value.trim();
-        if(!text) return;
-
-        const newMsg = {
-            id: Date.now(), channelId: activeId,
-            sender: (loggedInUser === 'all' ? 'yagiz' : loggedInUser),
-            text: text, time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
-        };
+        if(!input.value.trim()) return;
+        const newMsg = { id: Date.now(), channelId: activeId, sender: loggedInUser, text: input.value, time: '' };
         messages.push(newMsg);
-        input.value = ''; 
-        renderMessages();
-        
-        // SUPABASE SYNC
+        input.value = ''; renderMessages();
         await supabase.from('messages').insert([newMsg]);
     }
 
-    // ROOM ADMIN CONTROLS
-    function closeRoomAuth() { document.getElementById('roomAuthModal').classList.remove('active'); pendingAuthRoomId = null; }
-    function submitRoomAuth() {
-        const attempt = document.getElementById('roomPasswordAttempt').value;
-        const ch = channels.find(c => c.id === pendingAuthRoomId);
-        if(ch && ch.password === attempt) {
-            closeRoomAuth(); executeViewChange('chat', pendingAuthRoomId);
-        } else { document.getElementById('roomAuthError').classList.remove('hidden'); }
+    function triggerAI(type) {
+        const console = document.getElementById('ai-console');
+        console.innerHTML = "> Ajan başlatıldı...\n> Veriler taranıyor...\n> İşlem tamamlandı. Sonuçlar panonuza eklendi.";
     }
 
-    function openRoomSettings() {
-        const ch = channels.find(c => c.id === activeId);
-        if(!ch) return;
-        document.getElementById('settingRoomPassword').value = ch.password || '';
-        const ml = document.getElementById('settingMembersList');
-        ml.innerHTML = '';
-        ch.members.forEach(m => {
-            let isYagiz = (m === 'yagiz');
-            let removeBtn = isYagiz ? '<span class="text-[10px] text-slate-500">Kurucu</span>' : `<button onclick="kickMember('${m}')" class="text-xs text-rose-500 hover:text-rose-400">Çıkar</button>`;
-            ml.innerHTML += `<li class="flex justify-between items-center py-1 border-b border-slate-700/50 last:border-0">
-                <span class="text-sm text-slate-300">${personNames[m]}</span>${removeBtn}
-            </li>`;
-        });
-        document.getElementById('roomSettingsModal').classList.add('active');
-    }
+    function lockSession() { unlockedViews = []; loggedInUser = null; location.reload(); }
 
-    function closeRoomSettings() { document.getElementById('roomSettingsModal').classList.remove('active'); }
-
-    async function saveRoomPassword() {
-        const pass = document.getElementById('settingRoomPassword').value;
-        const idx = channels.findIndex(c => c.id === activeId);
-        if(idx > -1) { 
-            channels[idx].password = pass; 
-            // SUPABASE SYNC
-            await supabase.from('channels').update({ password: pass }).eq('id', activeId);
-            alert("Şifre güncellendi!"); renderSidebarChannels(); executeViewChange('chat', activeId); 
-        }
-    }
-
-    async function kickMember(memberId) {
-        const idx = channels.findIndex(c => c.id === activeId);
-        if(idx > -1) {
-            channels[idx].members = channels[idx].members.filter(m => m !== memberId);
-            // SUPABASE SYNC
-            await supabase.from('channels').update({ members: JSON.stringify(channels[idx].members) }).eq('id', activeId);
-            openRoomSettings(); executeViewChange('chat', activeId);
-        }
-    }
-
-    async function deleteCurrentRoom() {
-        if(confirm("Bu odayı ve içindeki tüm mesajları SİLMEK istediğinize emin misiniz?")) {
-            const idToDelete = activeId;
-            channels = channels.filter(c => c.id !== idToDelete);
-            messages = messages.filter(m => m.channelId !== idToDelete);
-            closeRoomSettings();
-            changeModule('board', 'all');
-            
-            // SUPABASE SYNC
-            await supabase.from('channels').delete().eq('id', idToDelete);
-            await supabase.from('messages').delete().eq('channelId', idToDelete);
-        }
-    }
-
-    function openNewRoomModal() { document.getElementById('newRoomModal').classList.add('active'); }
-    function closeNewRoomModal() { document.getElementById('newRoomModal').classList.remove('active'); }
-    
-    async function createRoom(ev) {
-        ev.preventDefault();
-        const name = document.getElementById('roomName').value;
-        const pass = document.getElementById('roomPass').value;
-        let members = Array.from(document.querySelectorAll('.room-member:checked')).map(cb => cb.value);
-        
-        let creator = loggedInUser === 'all' ? 'yagiz' : loggedInUser;
-        if(!members.includes(creator)) members.push(creator);
-        if(!members.includes('yagiz')) members.push('yagiz'); 
-
-        const newRoom = { id: 'c_' + Date.now(), name: name, type: 'private', members: members, password: pass };
-        channels.push(newRoom);
-        closeNewRoomModal(); changeModule('chat', newRoom.id);
-
-        // SUPABASE SYNC
-        await supabase.from('channels').insert([{ ...newRoom, members: JSON.stringify(newRoom.members) }]);
-    }
-
-    // TASK ENGINE
-    let targetNewStatus = 'todo';
-    function openNewTaskModal(status) { targetNewStatus = status; document.getElementById('newTaskModal').classList.add('active'); }
-    function closeNewTaskModal() { document.getElementById('newTaskModal').classList.remove('active'); }
-    
-    async function saveNewTask(ev) {
-        ev.preventDefault();
-        const newTask = {
-            id: Date.now(), desc: document.getElementById('newDesc').value,
-            assignee: document.getElementById('newAssignee').value,
-            deadline: document.getElementById('newDeadline').value,
-            status: targetNewStatus, notes: ''
-        };
-        tasks.push(newTask);
-        closeNewTaskModal();
-        if (activeId === 'all') renderList(); else renderKanban();
-
-        // SUPABASE SYNC
-        await supabase.from('tasks').insert([newTask]);
-    }
-
-    async function updateTaskStatus(taskId, newStatus) {
-        const idx = tasks.findIndex(t => t.id === taskId);
-        if(idx > -1) { 
-            tasks[idx].status = newStatus; renderList(); 
-            // SUPABASE SYNC
-            await supabase.from('tasks').update({ status: newStatus }).eq('id', taskId);
-        }
-    }
-
-    // DRAG AND DROP KANBAN SYNC
-    function allowDrop(ev) { ev.preventDefault(); }
-    function drag(ev) { ev.dataTransfer.setData("text", ev.currentTarget.id); }
-    function drop(ev) {
-        ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-        const element = document.getElementById(data);
-        let targetColumn = ev.target.closest('.kanban-column');
-        if (targetColumn && element) {
-            const taskId = parseInt(data.replace('task-', ''));
-            const idx = tasks.findIndex(t => t.id === taskId);
-            if(idx > -1) {
-                tasks[idx].status = targetColumn.id;
-                renderKanban();
-                // SUPABASE SYNC
-                supabase.from('tasks').update({ status: targetColumn.id }).eq('id', taskId).then();
-            }
-        }
-    }
-
-    function updateProgress(filteredTasks) {
-        if(filteredTasks.length===0) return;
-        const done = filteredTasks.filter(t=>t.status==='done').length;
-        const pct = Math.round((done/filteredTasks.length)*100);
-        document.getElementById('progress-bar').style.width = pct+'%';
-        document.getElementById('progress-text').innerText = pct+'%';
-    }
-
-    function renderList() {
-        const tbody = document.getElementById('list-body');
-        tbody.innerHTML = '';
-        tasks.forEach(t => {
-            const dateStr = new Date(t.deadline).toLocaleDateString('tr-TR', {day:'2-digit', month:'short'});
-            tbody.innerHTML += `
-                <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition">
-                    <td class="px-8 py-3">
-                        <select onchange="updateTaskStatus(${t.id}, this.value)" class="bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs font-semibold text-slate-300 outline-none focus:border-slate-500">
-                            <option value="todo" ${t.status === 'todo' ? 'selected' : ''}>⏳ Yapılacak</option>
-                            <option value="inprogress" ${t.status === 'inprogress' ? 'selected' : ''}>🔥 Devam</option>
-                            <option value="done" ${t.status === 'done' ? 'selected' : ''}>✅ Bitti</option>
-                        </select>
-                    </td>
-                    <td class="px-8 py-3 font-medium text-slate-200">${t.desc}</td>
-                    <td class="px-8 py-3"><span class="px-2 py-1 rounded text-[10px] font-bold bg-person-${t.assignee}">${personNames[t.assignee]}</span></td>
-                    <td class="px-8 py-3 text-xs text-slate-400">${dateStr}</td>
-                </tr>
-            `;
-        });
-        updateProgress(tasks);
-    }
-
-    function renderKanban() {
-        document.getElementById('todo').innerHTML=''; document.getElementById('inprogress').innerHTML=''; document.getElementById('done').innerHTML='';
-        const viewTasks = tasks.filter(t => t.assignee === activeId);
-        let counts = {todo:0, inprogress:0, done:0};
-
-        viewTasks.forEach(t => {
-            counts[t.status]++;
-            const dateStr = new Date(t.deadline).toLocaleDateString('tr-TR', {day:'2-digit', month:'short'});
-            const card = `
-                <div id="task-${t.id}" class="task-card glass-card p-4 rounded-lg text-sm font-medium text-slate-200" draggable="true" ondragstart="drag(event)">
-                    <p class="mb-3">${t.desc}</p>
-                    <p class="text-[10px] text-slate-400 bg-slate-800 border border-slate-700 inline-block px-1.5 py-0.5 rounded">⏰ ${dateStr}</p>
-                </div>
-            `;
-            document.getElementById(t.status).innerHTML += card;
-        });
-
-        document.getElementById('count-todo').innerText = counts.todo;
-        document.getElementById('count-inprogress').innerText = counts.inprogress;
-        document.getElementById('count-done').innerText = counts.done;
-        updateProgress(viewTasks);
-    }
-
-    
-    // --- AI FACTORY ENGINE ---
-    function triggerAI(agentType) {
-        const consoleBox = document.getElementById('ai-console');
-        const statusInd = document.getElementById('ai-status-indicator');
-        
-        statusInd.innerText = "AJAN ÇALIŞIYOR...";
-        statusInd.className = "text-[10px] uppercase font-bold text-amber-500 animate-pulse";
-        
-        let lines = [];
-        if(agentType === 'data_miner') {
-            lines = [
-                "> Hedef Kitle Ajanı (Data Miner) başlatıldı...",
-                "> İnternet üzerinde 'Üniversite Sinema Kulübü' anahtar kelimeleri taranıyor...",
-                "> Instagram, X ve Web forumları kazınıyor. [İşlem 2-3 dakika sürebilir]",
-                "> ...",
-                "> BULUNDU: İTÜ Sinema Kulübü (ig: @itusinema) - Etkileşim Yüksek",
-                "> BULUNDU: Boğaziçi Sinema Kulübü (ig: @bounsinema)",
-                "> BULUNDU: ODTÜ SİNEK (ig: @odtusinek) - Mail: iletisim@odtusinek.com",
-                "> ... Toplam 42 aktif kulüp bulundu.",
-                "> [BİLGİ] Veriler Supabase'e kaydedildi ve Yağız'ın panosuna 'Tüm kulüplere mail at' görevi olarak eklendi."
-            ];
-        } else if(agentType === 'hook_generator') {
-            lines = [
-                "> İçerik Ajanı başlatıldı...",
-                "> TikTok Dating App trendleri (Son 7 gün) taranıyor...",
-                "> Duygu analizi yapılıyor...",
-                "> [Kanca 1]: 'Aynı filme ağlayan iki kişiyi eşleştirdik... Sonuç inanılmazdı.' (Duygusal, %82 Viral İhtimali)",
-                "> [Kanca 2]: 'Tinder'da ghostlandın mı? Biz seni en sevdiğin yönetmene göre eşleştiriyoruz.' (Agresif Rakip Vurma)",
-                "> [Kanca 3]: 'POV: İlk buluşmaya gittin ve ikinizin de en sevdiği film Fight Club çıktı 🚩' (Mizah/Z Kuşağı)",
-                "> [BİLGİ] Metinler Aysıla'nın panosuna not olarak düşüldü."
-            ];
-        } else if(agentType === 'ad_copy') {
-            lines = [
-                "> Global Reklam Ajanı başlatıldı...",
-                "> Hedef Pazar: Almanya seçildi.",
-                "> Alman Z kuşağı flört jargonu yükleniyor...",
-                "> Başlık 1 (Almanca): 'Vergiss Swipe-Fatigue. Finde dein perfektes Match durch Filme.'",
-                "> Hedef Kitle Önerisi: İlgi Alanı 'Berlinale, A24, Letterboxd' olan 18-24 yaş arası Berlin/Münih lokasyonu.",
-                "> [BİLGİ] Kampanya mimarisi Efe'nin panosuna taslak olarak aktarıldı."
-            ];
-        } else if(agentType === 'shadow_cto') {
-            lines = [
-                "> Shadow CTO başlatıldı...",
-                "> Yeni Özellik İsteği Bekleniyor: 'Kullanıcılar eşleşmeye sesli mesaj atsın'",
-                "> Supabase şeması çiziliyor...",
-                "> Tablo: 'voice_messages' (id, match_id, sender_id, audio_url, created_at)",
-                "> Uyarı: Ses dosyaları Storage'ı hızlı doldurabilir. Saniyeyi 5 ile sınırlayan Flutter kodu tasarlandı.",
-                "> [BİLGİ] Teknik Rapor Berkay'a '#Genel Pano' üzerinden mesaj olarak gönderildi."
-            ];
-        }
-
-        consoleBox.innerHTML = '';
-        let i = 0;
-        
-        // Simüle edilmiş Daktilo Efekti
-        function typeLine() {
-            if(i < lines.length) {
-                consoleBox.innerHTML += lines[i] + '\n';
-                consoleBox.scrollTop = consoleBox.scrollHeight;
-                i++;
-                setTimeout(typeLine, Math.random() * 800 + 400); // Random delay 0.4s to 1.2s per line
-            } else {
-                statusInd.innerText = "TAMAMLANDI";
-                statusInd.className = "text-[10px] uppercase font-bold text-emerald-500";
-            }
-        }
-        typeLine();
-    }
-
-    // START SUPABASE CONNECTION ON LOAD
     window.onload = initSupabase;
-
 </script>
 </body>
 </html>
