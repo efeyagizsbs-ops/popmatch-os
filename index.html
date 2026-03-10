@@ -337,61 +337,55 @@
     let messages = [];
 
     // INIT DB
+    
     async function initSupabase() {
         try {
-            // Load Channels
-            const { data: cData } = await supabase.from('channels').select('*');
+            console.log("Connecting to Supabase...");
+            
+            const { data: cData, error: cErr } = await supabase.from('channels').select('*');
+            if (cErr) throw new Error("Channels Error: " + cErr.message);
+            
             if (cData && cData.length > 0) {
-                // Ensure members is parsed if it came as string
                 channels = cData.map(c => ({
                     ...c, 
                     members: typeof c.members === 'string' ? JSON.parse(c.members) : c.members
                 }));
             } else {
-                // Default channels if empty
                 channels = [
                     { id: 'c_genel', name: 'Genel Pano', type: 'public', members: [], password: '' },
                     { id: 'c_muhasebe', name: 'Muhasebe', type: 'public', members: [], password: '' },
                     { id: 'c_hukuk', name: 'Hukuk', type: 'public', members: [], password: '' }
                 ];
-                // Push defaults to DB
                 for(let ch of channels) {
                     await supabase.from('channels').insert([{ ...ch, members: JSON.stringify(ch.members) }]);
                 }
             }
 
-            // Load Tasks
-            const { data: tData } = await supabase.from('tasks').select('*');
+            const { data: tData, error: tErr } = await supabase.from('tasks').select('*');
+            if (tErr) throw new Error("Tasks Error: " + tErr.message);
             if (tData && tData.length > 0) tasks = tData;
 
-            // Load Messages
-            const { data: mData } = await supabase.from('messages').select('*');
+            const { data: mData, error: mErr } = await supabase.from('messages').select('*');
+            if (mErr) throw new Error("Messages Error: " + mErr.message);
             if (mData && mData.length > 0) messages = mData;
 
-            // Hide Loading, Show Auth
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('sync-indicator').classList.remove('hidden');
-            changeModule('board', 'all');
-
-        } catch (err) {
-            console.error("Supabase Error:", err);
-            // Hata olsa bile sistemi tamamen kilitlememek için local modda başlat:
             document.getElementById('loading-screen').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
             document.getElementById('auth-screen').classList.add('flex');
             
-            // Kullanıcıya küçük bir uyarı gösterelim:
-            const errorMsg = document.createElement('div');
-            errorMsg.className = 'absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg font-bold text-sm z-50';
-            errorMsg.innerText = "Veritabanı bağlantısı kurulamadı. Çevrimdışı (Local) modda çalışıyorsunuz.";
-            document.body.appendChild(errorMsg);
-            setTimeout(() => errorMsg.remove(), 5000);
-            
-            changeModule('board', 'all');
+        } catch (err) {
+            console.error("FATAL ERROR:", err);
+            document.getElementById('loading-screen').innerHTML = '<div class="text-center"><p class="text-rose-500 font-bold mb-2 text-xl">VERİTABANI BAĞLANTISI KOPTU</p><p class="text-sm text-slate-300 mb-6 max-w-md mx-auto break-words">' + err.message + '</p><button onclick="forceStart()" class="px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-extrabold rounded-xl shadow-lg transition">Sistemi Çevrimdışı (Local) Başlat</button></div>';
         }
     }
 
-    // AUTH
+    window.forceStart = function() {
+        document.getElementById('loading-screen').classList.add('hidden');
+        document.getElementById('auth-screen').classList.remove('hidden');
+        document.getElementById('auth-screen').classList.add('flex');
+    };
+
+
     function changeModule(module, id) {
         if (unlockedViews.length === 0) {
             document.getElementById('board-screen').classList.add('hidden');
