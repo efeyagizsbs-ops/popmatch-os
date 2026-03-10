@@ -338,7 +338,25 @@
 
     // INIT DB
     
+    
+    // AGGRESSIVE FAILSAFE
+    setTimeout(() => {
+        const loader = document.getElementById('loading-screen');
+        if (loader && !loader.classList.contains('hidden')) {
+            console.warn("Supabase connection taking too long. Forcing start...");
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('auth-screen').classList.add('flex');
+            
+            const warning = document.createElement('div');
+            warning.className = 'absolute top-0 left-0 w-full bg-amber-600 text-white text-[10px] py-1 text-center font-bold z-[100]';
+            warning.innerText = "UYARI: Veritabanı geciktiği için Çevrimdışı Modda başlatıldı. Veriler kaydedilmeyebilir.";
+            document.body.appendChild(warning);
+        }
+    }, 4000);
+
     async function initSupabase() {
+
         try {
             console.log("Connecting to Supabase...");
             
